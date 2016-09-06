@@ -1,0 +1,30 @@
+{
+  "name": "@zkat/fl-protocols",
+  "version": "0.0.0",
+  "description": "fantasy-land specification bridge for @zkat/protocols",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zkat/fl-protocols.git"
+  },
+  "keywords": [
+    "fantasy-land",
+    "fantasyland",
+    "fl",
+    "protocols",
+    "functional",
+    "monad",
+    "typeclass"
+  ],
+  "peerDependencies": {
+    "fantasy-land": "*"
+  },
+  "author": "Kat Marchán <kzm@sykosomatic.org>",
+  "license": "CC0-1.0",
+  "dependencies": {
+    "@zkat/protocols": "^1.1.1"
+  }
+}
