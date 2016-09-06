@@ -1,6 +1,6 @@
 {
   "name": "@zkat/fl-protocols",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "fantasy-land specification bridge for @zkat/protocols",
   "main": "index.js",
   "scripts": {
