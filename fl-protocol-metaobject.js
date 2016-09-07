@@ -22,7 +22,7 @@ protocol.meta.addMethod.add([Metaobject], function (mo, p, name, types, fn) {
 protocol.meta.createGenfun.add([Metaobject], function (mo, p, name) {
   var gf = genfun.callNextMethod()
   // There's an annoying bug in genfun that means [] methods break
-  gf.add([Object], function (target) {
+  gf.add([], function (target) {
     if (target[fl[name]]) {
       return target[fl[name]].apply(target, [].slice.call(arguments, 1))
     } else if (mo.targetConstructor && target.constructor[fl[name]]) {
