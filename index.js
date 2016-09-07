@@ -23,7 +23,7 @@ module.exports = {
   apply: Apply.ap,
   of: Applicative.of,
   reduce: Foldable.reduce,
-  Traversable: Traversable.sequence,
+  sequence: Traversable.sequence,
   chain: Chain.chain,
   chainRec: ChainRec.chainRec,
   extend: Extend.extend,
