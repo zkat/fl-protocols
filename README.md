@@ -21,18 +21,17 @@ great way to augment your `fantasy-land` implementations!
 ```
 // Basic two-way compatibility
 > var flp = require('@zkat/fl-protocols')
-undefined
 > var fl = require('fantasy-land')
 > var Monoid = require('@zkat/fl-protocols/monoid')
-undefined
+
 > Monoid([Number], { empty: () => 0 })
-undefined
+
 > flp.empty(1)
 0
 > Number(1)[fl.empty]()
 0
-// has a bug, but should work soon...
-> var obj = { [fl.empty]: () => {} }
+> var obj = { [fl.empty]: () => ({}) }
+
 > flp.empty(obj)
 {}
 > Monoid.empty(obj)
