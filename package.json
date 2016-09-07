@@ -25,6 +25,6 @@
   "author": "Kat Marchán <kzm@sykosomatic.org>",
   "license": "CC0-1.0",
   "dependencies": {
-    "@zkat/protocols": "^1.1.1"
+    "@zkat/protocols": "^1.1.2"
   }
 }
