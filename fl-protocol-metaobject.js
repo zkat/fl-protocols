@@ -10,8 +10,9 @@ var Metaobject = module.exports = function (opts) {
 
 protocol.meta.createGenfun.add([Metaobject], function (mo, p, target, name) {
   var gf = protocol.meta.createGenfun.callNextMethod()
-  // There's an annoying bug in genfun that means [] methods break
-  if (!target) {
+  if (target) {
+    target[fl[name]] = gf
+  } else {
     gf.add([], function (target) {
       if (target[fl[name]]) {
         return target[fl[name]].apply(target, slice.call(arguments, 1))
@@ -21,8 +22,6 @@ protocol.meta.createGenfun.add([Metaobject], function (mo, p, target, name) {
         return protocol.noImplFound(gf, this, arguments)
       }
     })
-  } else {
-    target[fl[name]] = gf
   }
   return gf
 })
