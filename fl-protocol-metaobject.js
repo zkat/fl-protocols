@@ -1,36 +1,42 @@
 'use strict'
 
-var protocol = require('@zkat/protocols')
-var genfun = require('genfun')
+var protocol = require('protoduck')
 var fl = require('fantasy-land')
+var slice = [].slice
 
 var Metaobject = module.exports = function (opts) {
   this.targetConstructor = opts && opts.targetConstructor
 }
 
-protocol.meta.addMethod.add([Metaobject], function (mo, p, name, types, fn) {
-  var target = typeof types[0] === 'function' ? types[0].prototype : types[0]
-  genfun.callNextMethod()
-  if (target) {
-    var gf = p[name]
-    target[fl[name]] = function () {
-      return gf.apply(this, [this].concat(arguments))
-    }
+protocol.meta.createGenfun.add([Metaobject], function (mo, p, target, name) {
+  var gf = protocol.meta.createGenfun.callNextMethod()
+  // There's an annoying bug in genfun that means [] methods break
+  if (!target) {
+    gf.add([], function (target) {
+      if (target[fl[name]]) {
+        return target[fl[name]].apply(target, slice.call(arguments, 1))
+      } else if (mo.targetConstructor && target.constructor[fl[name]]) {
+        return target.constructor[fl[name]].apply(this, arguments)
+      } else {
+        return protocol.noImplFound(gf, this, arguments)
+      }
+    })
+  } else {
+    target[fl[name]] = gf
   }
+  return gf
 })
 
-protocol.meta.createGenfun.add([Metaobject], function (mo, p, name) {
-  var gf = genfun.callNextMethod()
-  // There's an annoying bug in genfun that means [] methods break
-  gf.add([], function (target) {
-    if (target[fl[name]]) {
-      return target[fl[name]].apply(target, [].slice.call(arguments, 1))
-    } else if (mo.targetConstructor && target.constructor[fl[name]]) {
-      return target.constructor[fl[name]].apply(
-        target, [].slice.call(arguments, 1))
-    } else {
-      return protocol.noImplFound(gf, this, arguments)
+protocol.meta.addMethod.add([Metaobject], function (mo, p, target, name, types, fn) {
+  protocol.meta.addMethod.callNextMethod()
+  if (!target) {
+    var tgt = typeof types[0] === 'function' ? types[0].prototype : types[0]
+    tgt = tgt || Object.prototype
+    if (!tgt[fl[name]]) {
+      protocol.meta.createGenfun(mo, p, tgt, name)
     }
-  })
-  return gf
+    tgt[fl[name]].add(slice.call(types, 1), function () {
+      fn.apply(this, [this].concat(arguments))
+    })
+  }
 })
