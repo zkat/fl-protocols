@@ -28,6 +28,9 @@ protocol.meta.createGenfun.add([Metaobject], function (mo, p, target, name) {
 
 protocol.meta.addMethod.add([Metaobject], function (mo, p, target, name, types, fn) {
   protocol.meta.addMethod.callNextMethod()
+  // if there was a target, then target[name] is a genfun and is sharing the
+  // same object with target[fl[name]], so we don't need to do any work
+  // in that case
   if (!target) {
     var tgt = typeof types[0] === 'function' ? types[0].prototype : types[0]
     tgt = tgt || Object.prototype
