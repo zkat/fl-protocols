@@ -1,14 +1,14 @@
 {
-  "name": "@zkat/fl-protocols",
+  "name": "protoduck-fantasyland",
   "version": "1.0.2",
-  "description": "fantasy-land specification bridge for @zkat/protocols",
+  "description": "fantasy-land specification bridge for protoduck",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zkat/fl-protocols.git"
+    "url": "git+https://github.com/zkat/protoduck-fantasyland.git"
   },
   "keywords": [
     "fantasy-land",
@@ -17,6 +17,7 @@
     "protocols",
     "functional",
     "monad",
+    "duck typing"
     "typeclass"
   ],
   "peerDependencies": {
@@ -25,6 +26,6 @@
   "author": "Kat Marchán <kzm@sykosomatic.org>",
   "license": "CC0-1.0",
   "dependencies": {
-    "@zkat/protocols": "^1.1.2"
+    "protoduck": "^3.1.0"
   }
 }

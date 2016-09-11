@@ -1,53 +1,53 @@
 # Fantasyland Protocols
 
 This module provides a
-[`fantasy-land`](https://github.com/fantasyland/fantasy-land) compatibility
-layer using [`protocols`](https://github.com/zkat/protocols). The compatibility
+[`fantasy-land`](npm.im/fantasy-land) compatibility
+layer using [`protoduck`](npm.im/protoduck). The compatibility
 layer includes protocol definitions for all protocols with methods listed in the
 `fantasy-land` spec, and includes automatic two-way compatibility between
 methods defined in either world.
 
-That is: you can use protocol functions exported by `fl-protocols` on any
+That is: you can use protocol functions exported by `protoduck-fl` on any
 object(s) that have `fantasy-land` methods implemented, without any extra work,
-and and methods you define using `fl-protocols` will automatically become
+and and methods you define using `protoduck-fl` will automatically become
 available to `fantasy-land` users even if they are not directly using
-`fl-protocols`.
+`protoduck-fl`.
 
-Even multiple-dispatched protocols will work two-ways, so `fl-protocols` is a
+Even multiple-dispatched protocols will work two-ways, so `protoduck-fl` is a
 great way to augment your `fantasy-land` implementations!
 
 ## Example
 
 ```
 // Basic two-way compatibility
-> var flp = require('@zkat/fl-protocols')
+> var Monoid = require('protoduck-fl/monoid')
 > var fl = require('fantasy-land')
-> var Monoid = require('@zkat/fl-protocols/monoid')
 
-> Monoid([Number], { empty: () => 0 })
+> Monoid(Number, { empty: () => 0 })
 
-> flp.empty(1)
-0
-> Number(1)[fl.empty]()
+> (1)[fl.empty]()
 0
 > var obj = { [fl.empty]: () => ({}) }
-
-> flp.empty(obj)
-{}
+[object Object]
 > Monoid.empty(obj)
 {}
 
 // Multiple dispatch on fl methods
-> var Setoid = require('@zkat/fl-protocols/setoid')
-undefined
-> Setoid([Number, String], {
-    equals: (n, s) => n === parseFloat(s)
+> var Setoid = require('protoduck-fl/setoid')
+> Setoid(Number, [Number], {
+    equals: (n) => this === n
   })
-> Setoid([String, Number], {
-    equals: (s, n) => parseFloat(s) === n
+> Setoid(Number, [String], {
+    equals: (s) => this === parseFloat(s)
   })
-> Number(5)[fl.equals]("5")
+> Setoid(String, [Number], {
+    equals: (n) => parseFloat(this) === n
+  })
+> (10)[fl.equals]("10")
+> (5)[fl.equals]("5")
 true
-> String("1")[fl.equals](1)
+> ("1")[fl.equals](1)
+true
+> Setoid.equals("1", 1)
 true
 ```
