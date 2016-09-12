@@ -35,13 +35,13 @@ great way to augment your `fantasy-land` implementations!
 // Multiple dispatch on fl methods
 > var Setoid = require('protoduck-fl/setoid')
 > Setoid(Number, [Number], {
-    equals: (n) => this === n
+    equals: (n) => +this === n
   })
 > Setoid(Number, [String], {
-    equals: (s) => this === parseFloat(s)
+    equals: (s) => +this === parseFloat(s)
   })
 > Setoid(String, [Number], {
-    equals: (n) => parseFloat(this) === n
+    equals: (n) => parseFloat(''+this) === n
   })
 > (10)[fl.equals]("10")
 > (5)[fl.equals]("5")
