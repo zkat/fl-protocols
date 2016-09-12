@@ -17,7 +17,7 @@
     "protocols",
     "functional",
     "monad",
-    "duck typing"
+    "duck typing",
     "typeclass"
   ],
   "peerDependencies": {
