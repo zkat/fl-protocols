@@ -4,6 +4,7 @@
   "description": "fantasy-land specification bridge for protoduck",
   "main": "index.js",
   "scripts": {
+    "postversion": "npm publish && git push --follow-tags",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
